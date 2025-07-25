@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.container{
+    background-color: #262626;
+    display: flex;
+    max-width: 100%;
+}
+
+.container-one{
+    display:flex ;
+    margin: 0 auto;
+    padding:7px;
+}
+
+.icone-central{
+    display: inherit;
+    margin-left: 250px;
+    margin-right: 250px;
+}
+
+button{
+    background-color: #262626;
+    border: none;
+}
+
+button:hover{
+    opacity: 0.7;
+}
+
+
+span{
+    color: white;
+    margin-top: 4px;
+    margin-left: 4px;
+}
