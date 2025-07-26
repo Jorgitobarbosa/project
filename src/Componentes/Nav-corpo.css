@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container-nav{
+    display: flex;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.icone-nav{
+    display: flex;
+
+}
+
+.nav-categoria{
+    display: flex;
+}
+
+.nav-categoria ul{
+    display: flex;
+    list-style: none;
+}

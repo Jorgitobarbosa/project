@@ -1,8 +1,10 @@
 import ReactDom from "react-dom/client";
 import Cabecalho from "./Componentes/CABECALHO";
+import Corpo from "./Componentes/CORPO";
 
 
-const root = ReactDom.createRoot(document.getElementById("cabecalho"));
-
+const root = ReactDom.createRoot(document.getElementById("header"));
 root.render(<Cabecalho/>);
 
+const root1 = ReactDom.createRoot(document.getElementById("main"));
+root1.render(<Corpo/>);
