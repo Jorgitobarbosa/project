@@ -14,15 +14,15 @@ function NavCorpo() {
           <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
         </svg>
 
-        <p>Menu</p>
+        <p className="menu">Menu</p>
       </div>
 
       <div className="nav-categoria">
         <ul>
-            <li><a href="#">Liquida Tech |</a></li>
-            <li><a href="#">Loja Apple |</a></li>
-            <li><a href="#">Loja Samsung |</a></li>
-            <li><a href="#">Loja Lenovo |</a></li>
+            <li><a href="#">Liquida Tech</a>|</li>
+            <li><a href="#">Loja Apple</a>|</li>
+            <li><a href="#">Loja Samsung</a>|</li>
+            <li><a href="#">Loja Lenovo</a>|</li>
             <li><a href="#">Loja Dell</a></li>
         </ul>
       </div>
