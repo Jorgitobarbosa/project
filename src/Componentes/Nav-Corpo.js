@@ -33,7 +33,7 @@ function NavCorpo() {
             <a href="#">Loja Samsung</a>|
           </li>
           <li>
-            <a href="#">Loja Lenovo</a>|
+            <a href="https://www.lenovo.com/br/pt/laptops/">Loja Lenovo</a>|
           </li>
           <li>
             <a href="#">Loja Dell</a>

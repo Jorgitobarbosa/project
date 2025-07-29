@@ -20,21 +20,128 @@ export default function SubMenu() {
       <div className="lista-aparelhos">
         <p>Departamentos</p>
         <ul>
-            <li><a href="#">Notebooks</a></li>
-            <li><a href="#">Computagores</a></li>
-            <li><a href="#">Tablets</a></li>
-            <li><a href="#">Notebooks</a></li>
-            <li><a href="#">Smartphone</a></li>
-            <li><a href="#">Monitor</a></li>
-            <li><a href="#">Acessórios e Periféricos</a></li>
-            <li><a href="#">Apple</a></li>
-            <li><a href="#">Notebooks Gamer</a></li>
+          <li>
+            <div className="item-submenu">
+              <div className="move">
+                <p>Marcas</p>
+              </div>
+              <ul>
+                <li><a href="#">Dell</a></li>
+                <li><a href="#">Lenovo</a></li>
+                <li><a href="#">HP</a></li>
+                <li><a href="#">Positivo</a></li>
+              </ul>
+            </div>
+            <a href="#">Notebooks</a>
+          </li>
+          <li>
+            <div className="item-submenu">
+              <div className="move">
+                <p>Marcas</p>
+              </div>
+              <ul>
+                <li><a href="#">Dell</a></li>
+                <li><a href="#">Lenovo</a></li>
+                <li><a href="#">HP</a></li>
+                <li><a href="#">Positivo</a></li>
+              </ul>
+            </div>
+            <a href="#">Computagores</a>
+          </li>
+          <li>
+            <div className="item-submenu">
+              <div className="move">
+                <p>Marcas</p>
+              </div>
+              <ul>
+                <li><a href="#">Apple</a></li>
+                <li><a href="#">Samsung</a></li>
+              </ul>
+            </div>
+            <a href="#">Tablets</a>
+          </li>
+          <li>
+            <div className="item-submenu">
+              <div className="move">
+                <p>Marcas</p>
+              </div>
+              <ul>
+                <li><a href="#">Apple</a></li>
+                <li><a href="#">Motorola</a></li>
+                <li><a href="#">Samsung</a></li>
+                <li><a href="#">LG</a></li>
+              </ul>
+            </div>
+            <a href="#">Smartphone</a>
+          </li>
+          <li>
+            <div className="item-submenu">
+              <div className="move">
+                <p>Marcas</p>
+              </div>
+              <ul>
+                <li><a href="#">17P</a></li>
+                <li><a href="#">18P</a></li>
+                <li><a href="#">19P</a></li>
+                <li><a href="#">20P</a></li>
+                <li><a href="#">21P</a></li>
+                <li><a href="#">22P</a></li>
+                <li><a href="#">23P</a></li>
+              </ul>
+            </div>
+            <a href="#">Monitor</a>
+          </li>
+          <li>
+            <div className="item-submenu">
+              <div className="move">
+                <p>Marcas</p>
+              </div>
+              <ul>
+                <li><a href="#">17P</a></li>
+                <li><a href="#">18P</a></li>
+                <li><a href="#">19P</a></li>
+                <li><a href="#">20P</a></li>
+                <li><a href="#">21P</a></li>
+                <li><a href="#">22P</a></li>
+                <li><a href="#">23P</a></li>
+              </ul>
+            </div>
+            <a href="#">Acessórios e Periféricos</a>
+          </li>
+          <li>
+            <div className="item-submenu">
+              <div className="move">
+                <p>Marcas</p>
+              </div>
+              <ul>
+                <li><a href="#">Iphone</a></li>
+                <li><a href="#">Imac</a></li>
+                <li><a href="#">Ipad</a></li>
+                <li><a href="#">Macbook</a></li>
+              </ul>
+            </div>
+            <a href="#">Apple</a>
+          </li>
+          <li>
+            <div className="item-submenu">
+              <div className="move">
+                <p>Marcas</p>
+              </div>
+              <ul>
+                <li><a href="#">Iphone</a></li>
+                <li><a href="#">Imac</a></li>
+                <li><a href="#">Ipad</a></li>
+                <li><a href="#">Macbook</a></li>
+              </ul>
+            </div>
+            <a href="#">Notebooks Gamer</a>
+          </li>
         </ul>
       </div>
 
       <div className="info-adicional">
         <a href="#">
-            <p>Temos a melhor gestão para a sua Empresa. Confira!</p>
+          <p>Temos a melhor gestão para a sua Empresa. Confira!</p>
         </a>
       </div>
     </div>
