@@ -46,6 +46,19 @@ body {
 
 #footer {
   grid-area: footer;
-  background-color: brown;
-  text-align: center;
+  background-color: burlywood;
+}
+
+@media (max-width: 480px) {
+  #main {
+    width: 480px;
+  }
+
+  #header {
+    width: 480px;
+  }
+
+  #footer {
+    width: 480px;
+  }
 }

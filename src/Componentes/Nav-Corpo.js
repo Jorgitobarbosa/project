@@ -1,12 +1,13 @@
 import "./Nav-corpo.css";
 import SubMenu from "./SubMenu";
 
-
 function NavCorpo() {
   return (
     <div className="container-nav">
       <div className="icone-nav">
-        <div className="sub-menu"><SubMenu/></div>
+        <div className="sub-menu">
+          <SubMenu />
+        </div>
         <a href="#">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -24,8 +25,10 @@ function NavCorpo() {
       <div className="nav-categoria">
         <ul>
           <li>
-            <a href="#">Liquida Tech</a>|
+            {" "}
+            <a href="#">Liquida Tech</a>|{" "}
           </li>
+
           <li>
             <a href="#">Loja Apple</a>|
           </li>

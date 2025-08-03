@@ -59,3 +59,31 @@
     margin-left: 3px;
     margin-top: 2px;
 }
+
+@media (max-width: 480px) {
+    .container-nav {
+        display: block;
+        font-size: 16px;
+        line-height: 20px;
+        width: 480px;
+    }
+
+    .icone-nav {
+        display: flex;
+        margin-left: 5px;
+    }
+
+    .nav-categoria {
+        display: block;
+        flex-direction: column;
+    }
+
+   .nav-categoria ul {
+        flex-direction: column;
+   }
+
+    .sub-menu {
+        width: 200px;
+    }
+
+}
