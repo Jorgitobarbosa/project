@@ -1,6 +1,34 @@
+import { useState, useEffect } from "react";
 import "./Coluna-Cabec.css";
 
 function ColunaCabecalho() {
+  const [lista, setLista] = useState([]);
+  const [pesquisa, setPesquisa] = useState("");
+
+  useEffect(() => {
+    trazerListaProdutos();
+  }, []);
+
+  const trazerListaProdutos = () => {
+    fetch("https://dummyjson.com/products")
+      .then((dados) => dados.json())
+      .then((res) => {
+        setLista(res.products);
+      });
+  };
+
+  useEffect(() => {
+    filtrarProdutos(pesquisa);
+  }, [pesquisa]);
+
+  const filtrarProdutos = (filtro) => {
+    fetch(`https://dummyjson.com/products/search?q=${filtro}`)
+      .then((dados) => dados.json())
+      .then((res) => {
+        setLista(res.products);
+      });
+  };
+
   return (
     <div className="container-coluna">
       <div className="logo-cabecalho">
@@ -14,9 +42,11 @@ function ColunaCabecalho() {
 
       <div className="barra-pesquisa">
         <form>
-          <input type="text" placeholder="Encontre o que precisa" />
+          <input
+            type="text"
+            placeholder="Encontre o que precisa"
+          />
           <a href="https://www.google.com/" target="_blank">
-            
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"

@@ -21,8 +21,6 @@ body {
   width: inherit;
 }
 
-
-
 #header {
   grid-area: header;
 }
@@ -32,33 +30,30 @@ body {
   background-color:#f5f3ed;
 }
 
-.perfil{
-  height: 500px;
-  width: 1000px;
-  
-  background-color: rgb(134, 104, 104);
-  background-image: url('https://images.unsplash.com/photo-1621839673705-6617adf9e890?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-  background-size: cover;
-  background-position: center;
+.perfil{ 
+  height: 80%;
+  width: 87%;
+  background-color: rgb(78, 52, 52);
+  background-image: url("https://images.unsplash.com/photo-1669023414162-8b0573b9c6b2?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   border-radius: 10px;
   margin: 10px auto 10px;
+  background-size: cover;
+  background-position: center;
 }
 
 #footer {
   grid-area: footer;
-  background-color: burlywood;
 }
 
-@media (max-width: 480px) {
+@media  (max-width: 480px) {
   #main {
-    width: 480px;
+    width: 100%;
+    max-width: 480px;
   }
 
   #header {
-    width: 480px;
+    width: 100%;
+    max-width: 480px;
   }
 
-  #footer {
-    width: 480px;
-  }
 }

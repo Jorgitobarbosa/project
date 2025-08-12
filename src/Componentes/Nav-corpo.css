@@ -65,7 +65,8 @@
         display: block;
         font-size: 16px;
         line-height: 20px;
-        width: 480px;
+        width: 100%;
+        max-width: 480px;
     }
 
     .icone-nav {
@@ -83,7 +84,7 @@
    }
 
     .sub-menu {
-        width: 200px;
+        width: 50%;
     }
 
 }

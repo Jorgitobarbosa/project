@@ -1,14 +1,10 @@
-import ReactDom from "react-dom/client";
 import Cabecalho from "./Componentes/CABECALHO";
 import Corpo from "./Componentes/CORPO";
-import Rodape from "./Componentes/Rodape";
+import { createRoot } from "react-dom/client";
 
 
-const header = ReactDom.createRoot(document.getElementById("header"));
-header.render(<Cabecalho/>);
+createRoot(document.getElementById("header")).render(<Cabecalho/>);
 
-const main = ReactDom.createRoot(document.getElementById("main"));
-main.render(<Corpo/>);
-
-const footer = ReactDom.createRoot(document.getElementById("footer"));
-footer.render(<Rodape/>);
+createRoot(document.getElementById("main")).render(<Corpo/>);
+//const main = ReactDom.createRoot(document.getElementById("main"));
+//main.render(<Corpo/>);

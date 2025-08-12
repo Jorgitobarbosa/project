@@ -41,7 +41,8 @@
 
 @media (max-width: 480px) {
   .container-coluna {
-    width: 480px;
+    width: 100%;
+    max-width: 480px;
     display: flex;
     margin: 0;
     justify-items: start;
