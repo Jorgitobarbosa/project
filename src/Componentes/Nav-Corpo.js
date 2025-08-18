@@ -1,5 +1,5 @@
 import "./Nav-corpo.css";
-import SubMenu from "./SubMenu";
+import SubMenu from "./SubMenu"; 
 
 function NavCorpo() {
   return (
@@ -25,7 +25,6 @@ function NavCorpo() {
       <div className="nav-categoria">
         <ul>
           <li>
-            {" "}
             <a href="#">Liquida Tech</a>|{" "}
           </li>
 
@@ -36,7 +35,7 @@ function NavCorpo() {
             <a href="#">Loja Samsung</a>|
           </li>
           <li>
-            <a href="https://www.lenovo.com/br/pt/laptops/">Loja Lenovo</a>|
+            <a href="#">Loja Lenovo</a>|
           </li>
           <li>
             <a href="#">Loja Dell</a>
