@@ -15,7 +15,7 @@ function ColunaCabecalho() {
 
       <div className="barra-pesquisa">
         <form>
-          <input type="text" placeholder="Encontre o que precisa" disabled/>
+          <input type="text" placeholder="Encontre o que precisa"/>
           <a href="#">
             <svg
               xmlns="http://www.w3.org/2000/svg"
