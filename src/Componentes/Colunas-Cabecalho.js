@@ -3,8 +3,8 @@ import "./Coluna-Cabec.css";
 
 function ColunaCabecalho() {
   return (
-    <div className="container-coluna">
-      <div className="logo-cabecalho">
+    <div className="container-coluna-topo">
+      <div className="logo-cabecalho-topo">
         <img
           src="https://www.voke.shop/on/demandware.static/Sites-Voke-Site/-/default/dwf3e412cb/images/voke-logo-255.png"
           alt="Logo de Site"
@@ -13,7 +13,7 @@ function ColunaCabecalho() {
         ></img>
       </div>
 
-      <div className="barra-pesquisa">
+      <div className="barra-pesquisa-topo">
         <form>
           <input type="text" placeholder="Encontre o que precisa"/>
           <a href="#">
@@ -30,7 +30,7 @@ function ColunaCabecalho() {
         </form>
       </div>
 
-      <div className="icone-cabecalho">
+      <div className="icone-cabecalho-topo">
         <a href="#">
           <svg
             xmlns="http://www.w3.org/2000/svg"

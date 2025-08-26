@@ -11,7 +11,7 @@ function Corpo() {
   return (
     <div>
       <NavCorpo />
-      <div className="perfil">
+      <div className="perfil-grupo">
         <Perfil />
       </div>
       <Categories/>

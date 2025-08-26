@@ -13,10 +13,10 @@ export default function Categories() {
   ];
 
   return (
-    <div className="categories-container">
+    <div className="categories-container-produtos">
       {categories.map((cat, index) => (
-        <div key={index} className="category-item">
-          <div className="category-icon">{cat.icon}</div>
+        <div key={index} className="category-item-produtos">
+          <div className="category-icon-produtos">{cat.icon}</div>
           <p>{cat.name}</p>
         </div>
       ))}

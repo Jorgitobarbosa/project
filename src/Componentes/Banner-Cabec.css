@@ -4,18 +4,18 @@
     padding: 0;
 }
 
-.container{
+.container-banner{
     background-color: #262626;
     display: flex;
 }
 
-.container-one{
+.container-one-banner{
     display:flex;
     margin: 0 auto;
     padding:7px;
 }
 
-.icone-central{
+.icone-central-banner{
     display: inherit;
     margin-left: 250px ;
     margin-right: 250px ;
@@ -38,11 +38,11 @@ span{
 }
 
 @media (max-width: 480px) {
-    .icone-central {
+    .icone-central-banner {
         margin: 0;
     }
 
-    .container {
+    .container-banner {
         width: 100%;
         max-width: 480px;
     }

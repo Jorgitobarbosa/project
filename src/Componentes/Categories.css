@@ -1,3 +1,5 @@
+
+
 /* Contenedor del filtro y botón */
 .filter-add-container {
   display: flex;
@@ -69,16 +71,17 @@
 }
 
 
-.categories-container {
+.categories-container-produtos {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
   padding: 2rem 1rem;
   background-color: #f5f3ed;
+  font-family: "Bitcount Prop Single", sans-serif;
 }
 
-.category-item {
+.category-item-produtos {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,21 +93,23 @@
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   background-color: #fff7e6;
+  height: 100%;
+  max-height: 97px;
 }
 
-.category-item:hover {
+.category-item-produtos:hover {
   transform: translateY(-5px);
   background-color: #ffe6f0;
   color: #ff3399;
   box-shadow: 0 6px 14px rgba(0,0,0,0.1);
 }
 
-.category-icon {
+.category-icon-produtos {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
 
-.category-item p {
+.category-item-produtos p {
   margin: 1;
   font-weight: 600;
   font-size: 1rem;

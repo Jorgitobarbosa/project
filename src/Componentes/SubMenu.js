@@ -1,8 +1,8 @@
 import "./SubMenu.css";
 export default function SubMenu() {
   return (
-    <div id="sub-menu">
-      <div className="icone-subMenu">
+    <div id="sub-menu-nav">
+      <div className="icone-subMenu-nav">
         <a href="#">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -14,14 +14,14 @@ export default function SubMenu() {
             <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
           </svg>
         </a>
-        <p className="menu">Menu</p>
+        <p className="menu-toti">Menu</p>
       </div>
 
-      <div className="lista-aparelhos">
+      <div className="lista-aparelhos-nav">
         <p>Departamentos</p>
         <ul>
           <li>
-            <div className="item-submenu">
+            <div className="item-submenu-nav">
               <div className="move">
                 <p>Marcas</p>
               </div>
@@ -35,7 +35,7 @@ export default function SubMenu() {
             <a href="#">Notebooks</a>
           </li>
           <li>
-            <div className="item-submenu">
+            <div className="item-submenu-nav">
               <div className="move">
                 <p>Marcas</p>
               </div>
@@ -49,7 +49,7 @@ export default function SubMenu() {
             <a href="#">Computagores</a>
           </li>
           <li>
-            <div className="item-submenu">
+            <div className="item-submenu-nav">
               <div className="move">
                 <p>Marcas</p>
               </div>
@@ -61,7 +61,7 @@ export default function SubMenu() {
             <a href="#">Tablets</a>
           </li>
           <li>
-            <div className="item-submenu">
+            <div className="item-submenu-nav">
               <div className="move">
                 <p>Marcas</p>
               </div>
@@ -75,7 +75,7 @@ export default function SubMenu() {
             <a href="#">Smartphone</a>
           </li>
           <li>
-            <div className="item-submenu">
+            <div className="item-submenu-nav">
               <div className="move">
                 <p>Marcas</p>
               </div>
@@ -92,7 +92,7 @@ export default function SubMenu() {
             <a href="#">Monitor</a>
           </li>
           <li>
-            <div className="item-submenu">
+            <div className="item-submenu-nav">
               <div className="move">
                 <p>Marcas</p>
               </div>
@@ -109,7 +109,7 @@ export default function SubMenu() {
             <a href="#">Acessórios e Periféricos</a>
           </li>
           <li>
-            <div className="item-submenu">
+            <div className="item-submenu-nav">
               <div className="move">
                 <p>Marcas</p>
               </div>
@@ -123,7 +123,7 @@ export default function SubMenu() {
             <a href="#">Apple</a>
           </li>
           <li>
-            <div className="item-submenu">
+            <div className="item-submenu-nav">
               <div className="move">
                 <p>Marcas</p>
               </div>
@@ -139,7 +139,7 @@ export default function SubMenu() {
         </ul>
       </div>
 
-      <div className="info-adicional">
+      <div className="info-adicional-nav">
         <a href="#">
           <p>Temos a melhor gestão para a sua Empresa. Confira!</p>
         </a>

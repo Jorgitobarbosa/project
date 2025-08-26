@@ -1,3 +1,4 @@
+import "./ApiToti.css";
 import { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import lixo from "../imagens/lixo.png";
@@ -22,6 +23,7 @@ export default function ApiToti() {
     listaDeProdutos();
   }, []);
 
+  //TRAZENDO A LISTA DE PRODUTOS
   function listaDeProdutos() {
     fetch(`https://backend-toti.onrender.com/produtos`)
       .then((data) => data.json())
@@ -30,6 +32,7 @@ export default function ApiToti() {
       });
   }
 
+  //A FUNÇÃO QUE DELETA PRODUTO. DELETA NO BACKEND
   const abrirDeleteModal = (produto) => {
     setProdutoParaDeletar(produto);
     setShowDeleteModal(true);
@@ -54,8 +57,9 @@ export default function ApiToti() {
       );
       fecharDeleteModal();
     });
-  };
+  }; // fim da funcao deletar
 
+  //FUNÇÃO QUE ATUALIZA O PRODUTO, ISTO É, LOCALMENTE. NÃO ALTERA NADA NO BACKEND
   const abrirModalEdicao = (produto) => {
     setProdutoEditando({ ...produto });
     setShowModal(true);
@@ -71,11 +75,13 @@ export default function ApiToti() {
       prevLista.map((p) => (p.id === produtoEditando.id ? produtoEditando : p))
     );
     fecharModal();
-  };
+  }; // fim da funcao atualizar
 
+
+  //FUNÇÃO DE ADICIONAR PRODUTO. TAMBÉM NÃO ALTERA NADA NO BACKEND
   const abrirAddModal = () => {
     setNovoProduto({
-      id: Date(),
+      id: Date(), // Id fake
       nome: "",
       preco: "",
       categoriaId: "",
@@ -92,14 +98,11 @@ export default function ApiToti() {
   };
 
   return (
-    <div
-      style={{
-        padding: "10px",
-        backgroundColor: "orange",
-        paddingTop: "5%",
-        paddingBottom: "5%",
-      }}
-    >
+    <div className="Toti-container-principal">
+      <div>
+        <h3 style={{ fontFamily: "Bitcount Prop Single", marginLeft: "5%" }}>Imperdível</h3>
+      </div>
+
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <Button
           style={{ fontWeight: "bold", fontSize: "20px" }}
@@ -110,78 +113,56 @@ export default function ApiToti() {
         </Button>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "10px",
-          justifyContent: "center",
-        }}
-      >
+      <div className="Toti-Pai-card">
         {listaP.map((produtos) => (
-          <div
-            key={produtos.id || produtos.Date()}
-            style={{
-              width: "100%",
-              maxWidth: "250px",
-              borderRadius: "8px",
-              padding: "20px",
-              backgroundColor: "white",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                marginBottom: "20px",
-                justifyContent: "center",
-                margin: "10px",
-                gap: "15px",
-              }}
-            >
-              <button
-                onClick={() => abrirModalEdicao(produtos)}
-                style={{ backgroundColor: "white", cursor: "pointer" }}
-              >
+          <div className="Toti-card" key={produtos.id || produtos.Date()}>
+            <div className="Toti-container-buttons">
+              <button onClick={() => abrirModalEdicao(produtos)}>
                 <img src={editar} alt="Icone de Editar" />
               </button>
 
               <button
+                className="deletar-produto"
                 onClick={() => abrirDeleteModal(produtos)}
-                style={{ backgroundColor: "white", cursor: "pointer" }}
               >
                 <img src={lixo} alt="Icone de lixeira" />
               </button>
 
-              <button style={{ backgroundColor: "white", cursor: "pointer" }}>
+              <button>
                 <img src={carinho} alt="Carinho de Compra" />
               </button>
             </div>
 
-            <img
-              src={produtos.imagens[0].url}
-              alt={produtos.nome}
-              width={200}
-            />
-            <h2 style={{ fontSize: "18px", marginTop: "10px" }}>
-              {produtos.nome}
-            </h2>
-            <p
-              style={{
-                color: "green",
-                margin: "10px 0 10px",
-                fontWeight: "bold",
-              }}
-            >
-              R$ <strong style={{ fontSize: "25px" }}>{produtos.preco}</strong>{" "}
-              no PIX / Boleto
-            </p>
-            <p>
-              <strong>Categoria:</strong> {produtos.categoriaId}
-            </p>
+            <div className="Toti-Info-card">
+              <img
+                src={produtos.imagens[0].url}
+                alt={produtos.nome}
+                width={200}
+              />
 
-            <p style={{ fontSize: "13px", marginTop: "15px" }}>
-              em até <strong>10x de R$ 150,99</strong> sem juros
-            </p>
+              <h2>{produtos.nome}</h2>
+
+              <p
+                style={{
+                  color: "green",
+                  margin: "10px 0 10px",
+                  fontWeight: "bold",
+                }}
+              >
+                R$
+                <strong style={{ fontSize: "25px" }}>
+                  {produtos.preco}
+                </strong>{" "}
+                no PIX / Boleto
+              </p>
+              <p>
+                <strong>Categoria:</strong> {produtos.categoriaId}
+              </p>
+
+              <p style={{ fontSize: "13px", marginTop: "15px" }}>
+                em até <strong>10x de R$ 150,99</strong> sem juros
+              </p>
+            </div>
           </div>
         ))}
       </div>

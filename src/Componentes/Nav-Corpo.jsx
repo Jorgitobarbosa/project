@@ -3,10 +3,10 @@ import SubMenu from "./SubMenu";
 
 function NavCorpo() {
   return (
-    <div>
-      <div className="container-nav">
-        <div className="icone-nav">
-          <div className="sub-menu">
+    <div className="Container-principal-pai">
+      <div className="container-nav-toti">
+        <div className="icone-nav-toti">
+          <div className="sub-menu-toti">
             <SubMenu />
           </div>
           <a href="#">
@@ -20,10 +20,10 @@ function NavCorpo() {
               <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
             </svg>
           </a>
-          <p className="menu">Menu</p>
+          <p className="menu-toti">Menu</p>
         </div>
 
-        <div className="nav-categoria">
+        <div className="nav-categoria-toti">
           <ul>
             <li>
               <a href="#">Liquida Tech</a>|

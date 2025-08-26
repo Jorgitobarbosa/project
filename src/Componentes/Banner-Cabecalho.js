@@ -2,8 +2,8 @@ import "./Banner-Cabec.css";
 
 function BannerCabecalho() {
   return (
-    <div className="container">
-      <div className="container-one">
+    <div className="container-banner">
+      <div className="container-one-banner">
         <button type="submit">
           <svg
             className="seta-esquedo"
@@ -17,7 +17,7 @@ function BannerCabecalho() {
           </svg>
         </button>
 
-        <div className="icone-central">
+        <div className="icone-central-banner">
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"

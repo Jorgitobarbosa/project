@@ -4,26 +4,26 @@
   box-sizing: border-box;
 }
 
-#sub-menu {
+#sub-menu-nav {
   display: block;
 }
 
-.icone-subMenu {
+.icone-subMenu-nav {
   display: flex;
   font-family: "Bitcount Prop Single", sans-serif;
 }
 
-.lista-aparelhos {
+.lista-aparelhos-nav {
   display: block;
 }
 
-.lista-aparelhos p {
+.lista-aparelhos-nav p {
   margin-top: 15px;
   margin-bottom: 5px;
   color: blue;
   font-weight: bold;
 }
-.lista-aparelhos ul li {
+.lista-aparelhos-nav ul li {
   list-style: none;
   font-size: 16px;
   padding: 5px;
@@ -31,16 +31,16 @@
   font-weight: 500;
 }
 
-.lista-aparelhos ul li:hover {
+.lista-aparelhos-nav ul li:hover {
   background-color: #f5f3ed;
   color: rgb(130, 186, 67);
 }
 
-.lista-aparelhos ul li a {
+.lista-aparelhos-nav ul li a {
   text-decoration: none;
 }
 
-.info-adicional {
+.info-adicional-nav {
   display: block;
   padding: 20px;
   margin: 10px auto 10px;
@@ -49,11 +49,11 @@
   border-radius: 10px;
 }
 
-.info-adicional p {
+.info-adicional-nav p {
   color: white;
 }
 
-.item-submenu {
+.item-submenu-nav {
   display: none;
   position: absolute;
   border: 1px solid #ccc;
@@ -67,7 +67,7 @@
   padding: 5px;
 }
 
-.item-submenu .move {
+.item-submenu-nav .move {
   margin-top:55px ;
 }
 
@@ -76,15 +76,15 @@
   text-align: center;
 }
 
-.item-submenu ul li {
+.item-submenu-nav ul li {
   border-bottom: none;
   color: cornflowerblue;
 }
 
-.item-submenu ul li:hover{
+.item-submenu-nav ul li:hover{
   font-weight: 800;
 }
 
-.lista-aparelhos li:hover .item-submenu {
+.lista-aparelhos-nav li:hover .item-submenu-nav {
   display: block;
 }

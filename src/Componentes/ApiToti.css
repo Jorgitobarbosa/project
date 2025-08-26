@@ -1,0 +1,49 @@
+.Toti-container-principal {
+  padding: 10px;
+  background-color: #fe97c5;
+  padding-top: 3%;
+  padding-bottom: 5%;
+}
+
+.Toti-Pai-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.Toti-card {
+    width: 100%;
+    max-Width: 270px;
+    border-Radius: 15px;
+    padding: 20px;
+    background-Color: white;
+}
+
+.Toti-container-buttons {
+    display: flex;
+    margin-Bottom: 20px;
+    justify-Content: center;
+    margin: 10px;
+    gap: 15px;
+}
+
+.Toti-container-buttons button {
+    background-color: white; 
+    cursor: pointer;
+}
+
+.Toti-container-buttons .deletar-produto:hover{
+    background-color: rgb(197, 13, 13);
+    border-radius: 5px;
+}
+
+.Toti-Info-card {
+    display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.Toti-Info-card h2 {
+    font-size: 18px;
+    font-weight: bold;
+}

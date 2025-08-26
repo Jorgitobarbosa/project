@@ -1,32 +1,31 @@
 *{
     margin: 0;
     padding: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-.container-nav{
+
+.container-nav-toti{
     display: flex;
     font-size: 18px;
     line-height: 22px;
-    padding: 10px;
-    align-items: center; 
+    padding: 10px; 
     background-color: #fe97c5;
     font-family: "Bitcount Prop Single", sans-serif;
+    height: 43px;
 }
 
-.icone-nav{
+.icone-nav-toti{
     margin-right: 220px;
     margin-left: 70px;
     display: flex;
 }
 
-.icone-nav:hover .sub-menu {
+.icone-nav-toti:hover .sub-menu-toti {
     display: block;
 }
 
-.sub-menu {
+.sub-menu-toti {
     display: none;
     position: absolute;
     background: #fff;
@@ -39,29 +38,29 @@
     border-radius: 10px;  
 }
 
-.nav-categoria{
+.nav-categoria-toti{
     display: flex;
 }
 
-.nav-categoria ul{
+.nav-categoria-toti ul{
     display: flex;
     list-style: none;
 }
 
-.nav-categoria a {
+.nav-categoria-toti a {
     margin: 10px;
     text-decoration: none;
     color: #262626;
 }
 
-.menu{
+.menu-toti{
     font-size: 16px;
     margin-left: 3px;
     margin-top: 2px;
 }
 
 @media (max-width: 480px) {
-    .container-nav {
+    .container-nav-toti {
         display: block;
         font-size: 16px;
         line-height: 20px;
@@ -69,21 +68,21 @@
         max-width: 480px;
     }
 
-    .icone-nav {
+    .icone-nav-toti {
         display: flex;
         margin-left: 5px;
     }
 
-    .nav-categoria {
+    .nav-categoria-toti {
         display: block;
         flex-direction: column;
     }
 
-   .nav-categoria ul {
+   .nav-categoria-toti ul {
         flex-direction: column;
    }
 
-    .sub-menu {
+    .sub-menu-toti {
         width: 50%;
     }
 
