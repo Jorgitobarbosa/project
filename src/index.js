@@ -1,7 +1,7 @@
 import Cabecalho from "./Componentes/CABECALHO";
 import Corpo from "./Componentes/CORPO";
 import ReactDom from "react-dom/client";
-//import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 

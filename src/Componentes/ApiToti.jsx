@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button, Form } from "react-bootstrap";
 import lixo from "../imagens/lixo.png";
 import carinho from "../imagens/carinho.png";
 import editar from "../imagens/editar.png";
 
 export default function ApiToti() {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [produtoParaDeletar, setProdutoParaDeletar] = useState(null);
   const [listaP, setListaP] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [produtoEditando, setProdutoEditando] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [novoProduto, setNovoProduto] = useState({
+    nome: "",
+    preco: "",
+    categoriaId: "",
+    imagens: [{ url: "" }],
+  });
 
   useEffect(() => {
     listaDeProdutos();
@@ -22,24 +30,34 @@ export default function ApiToti() {
       });
   }
 
-  const deletarProduto = (id) => {
-    const confirmar = window.confirm(
-      "Tem certeza que deseja excluir este produto?"
-    );
+  const abrirDeleteModal = (produto) => {
+    setProdutoParaDeletar(produto);
+    setShowDeleteModal(true);
+  };
 
-    if (!confirmar) return;
+  const fecharDeleteModal = () => {
+    setShowDeleteModal(false);
+    setProdutoParaDeletar(null);
+  };
 
-    fetch(`https://backend-toti.onrender.com/produtos/:id`, {
-      method: "DELETE",
-    })
-      .then((data) => data.json())
-      .then(() =>
-        setListaP((prevLista) => prevLista.filter((p) => p.id !== id))
+  const confirmarDelete = () => {
+    if (!produtoParaDeletar) return;
+
+    fetch(
+      `https://backend-toti.onrender.com/produtos/${produtoParaDeletar.id}`,
+      {
+        method: "DELETE",
+      }
+    ).then(() => {
+      setListaP((prevLista) =>
+        prevLista.filter((p) => p.id !== produtoParaDeletar.id)
       );
+      fecharDeleteModal();
+    });
   };
 
   const abrirModalEdicao = (produto) => {
-    setProdutoEditando({ ...produto }); // Clona o produto para edição
+    setProdutoEditando({ ...produto });
     setShowModal(true);
   };
 
@@ -49,105 +67,126 @@ export default function ApiToti() {
   };
 
   const salvarEdicao = () => {
-  // Atualiza somente no estado local
-  setListaP((prevLista) =>
-    prevLista.map((p) =>
-      p.id === produtoEditando.id ? produtoEditando : p
-    )
-  );
+    setListaP((prevLista) =>
+      prevLista.map((p) => (p.id === produtoEditando.id ? produtoEditando : p))
+    );
+    fecharModal();
+  };
 
-  fecharModal();
-};
+  const abrirAddModal = () => {
+    setNovoProduto({
+      id: Date(),
+      nome: "",
+      preco: "",
+      categoriaId: "",
+      imagens: [{ url: "" }],
+    });
+    setShowAddModal(true);
+  };
 
+  const fecharAddModal = () => setShowAddModal(false);
+
+  const adicionarProduto = () => {
+    setListaP((prev) => [...prev, novoProduto]);
+    fecharAddModal();
+  };
 
   return (
     <div
       style={{
         padding: "10px",
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "8px",
-        justifyContent: "center",
         backgroundColor: "orange",
         paddingTop: "5%",
         paddingBottom: "5%",
       }}
     >
-      {listaP.map((produtos) => (
-        <div
-          key={produtos.id}
-          style={{
-            width: "100%",
-            maxWidth: "250px",
-            borderRadius: "8px",
-            padding: "20px",
-            backgroundColor: "white",
-          }}
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <Button
+          style={{ fontWeight: "bold", fontSize: "20px" }}
+          variant="success"
+          onClick={abrirAddModal}
         >
+          Adicionar Produto
+        </Button>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+          justifyContent: "center",
+        }}
+      >
+        {listaP.map((produtos) => (
           <div
+            key={produtos.id || produtos.Date()}
             style={{
-              display: "flex",
-              marginBottom: "20px",
-              justifyContent: "center",
-              margin: "10px",
-              gap: "15px",
+              width: "100%",
+              maxWidth: "250px",
+              borderRadius: "8px",
+              padding: "20px",
+              backgroundColor: "white",
             }}
           >
-            <button
-              onClick={() => abrirModalEdicao(produtos)}
+            <div
               style={{
-                backgroundColor: "white",
-                cursor: "pointer",
+                display: "flex",
+                marginBottom: "20px",
+                justifyContent: "center",
+                margin: "10px",
+                gap: "15px",
               }}
             >
-              <img src={editar} alt="Icone de Editar" />
-            </button>
+              <button
+                onClick={() => abrirModalEdicao(produtos)}
+                style={{ backgroundColor: "white", cursor: "pointer" }}
+              >
+                <img src={editar} alt="Icone de Editar" />
+              </button>
 
-            <button
-              onClick={() => deletarProduto(produtos.id)}
-              style={{
-                backgroundColor: "white",
-                cursor: "pointer",
-              }}
-            >
-              <img src={lixo} alt="Icone de lixeira" />
-            </button>
+              <button
+                onClick={() => abrirDeleteModal(produtos)}
+                style={{ backgroundColor: "white", cursor: "pointer" }}
+              >
+                <img src={lixo} alt="Icone de lixeira" />
+              </button>
 
-            <button
+              <button style={{ backgroundColor: "white", cursor: "pointer" }}>
+                <img src={carinho} alt="Carinho de Compra" />
+              </button>
+            </div>
+
+            <img
+              src={produtos.imagens[0].url}
+              alt={produtos.nome}
+              width={200}
+            />
+            <h2 style={{ fontSize: "18px", marginTop: "10px" }}>
+              {produtos.nome}
+            </h2>
+            <p
               style={{
-                backgroundColor: "white",
-                cursor: "pointer",
+                color: "green",
+                margin: "10px 0 10px",
+                fontWeight: "bold",
               }}
             >
-              <img src={carinho} alt="Carinho de Compra" />
-            </button>
+              R$ <strong style={{ fontSize: "25px" }}>{produtos.preco}</strong>{" "}
+              no PIX / Boleto
+            </p>
+            <p>
+              <strong>Categoria:</strong> {produtos.categoriaId}
+            </p>
+
+            <p style={{ fontSize: "13px", marginTop: "15px" }}>
+              em até <strong>10x de R$ 150,99</strong> sem juros
+            </p>
           </div>
+        ))}
+      </div>
 
-          <img src={produtos.imagens[0].url} alt={produtos.nome} width={200} />
-          <h2 style={{ fontSize: "18px", marginTop: "10px" }}>
-            {produtos.nome}
-          </h2>
-          <p
-            style={{
-              color: "green",
-              margin: "10px 0 10px",
-              fontWeight: "bold",
-            }}
-          >
-            R$ <strong style={{ fontSize: "25px" }}>{produtos.preco}</strong> no
-            PIX / Boleto
-          </p>
-          <p>
-            <strong>Categoria:</strong> {produtos.categoriaId}
-          </p>
-
-          <p style={{ fontSize: "13px", marginTop: "15px" }}>
-            em até <strong>10x de R$ 150,99</strong> sem juros
-          </p>
-        </div>
-      ))}
-
-      
+      {/* Modal de edição */}
       <Modal show={showModal} onHide={fecharModal}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Produto</Modal.Title>
@@ -194,6 +233,19 @@ export default function ApiToti() {
                   }
                 />
               </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>URL da Imagem</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={produtoEditando.imagens.url}
+                  onChange={(e) =>
+                    setProdutoEditando({
+                      ...produtoEditando,
+                      imagens: [{ url: e.target.value }],
+                    })
+                  }
+                />
+              </Form.Group>
             </Form>
           )}
         </Modal.Body>
@@ -203,6 +255,90 @@ export default function ApiToti() {
           </Button>
           <Button variant="primary" onClick={salvarEdicao}>
             Salvar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal de adicionar */}
+      <Modal show={showAddModal} onHide={fecharAddModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Novo Produto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Nome</Form.Label>
+              <Form.Control
+                type="text"
+                value={novoProduto.nome}
+                onChange={(e) =>
+                  setNovoProduto({ ...novoProduto, nome: e.target.value })
+                }
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Preço</Form.Label>
+              <Form.Control
+                type="number"
+                value={novoProduto.preco}
+                onChange={(e) =>
+                  setNovoProduto({ ...novoProduto, preco: e.target.value })
+                }
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Categoria</Form.Label>
+              <Form.Control
+                type="text"
+                value={novoProduto.categoriaId}
+                onChange={(e) =>
+                  setNovoProduto({
+                    ...novoProduto,
+                    categoriaId: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>URL da Imagem</Form.Label>
+              <Form.Control
+                type="text"
+                value={novoProduto.imagens.url}
+                onChange={(e) =>
+                  setNovoProduto({
+                    ...novoProduto,
+                    imagens: [{ url: e.target.value }],
+                  })
+                }
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={fecharAddModal}>
+            Cancelar
+          </Button>
+          <Button variant="success" onClick={adicionarProduto}>
+            Adicionar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/*Modal de Excluir*/}
+      <Modal show={showDeleteModal} onHide={fecharDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Exclusão</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Tem certeza que deseja excluir o produto{" "}
+          <strong>{produtoParaDeletar?.nome}</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={fecharDeleteModal}>
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={confirmarDelete}>
+            Deletar
           </Button>
         </Modal.Footer>
       </Modal>
