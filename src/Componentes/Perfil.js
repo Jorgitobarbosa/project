@@ -1,6 +1,7 @@
 import "./Perfil.css";
 import JorgitoPerfil from "../imagens/JorgitoPerfil.jpg";
 import Maylin from "../imagens/Maylin.jpg";
+import jorgito from "../imagens/jorgito.jpg";
 
 export default function Perfil() {
   return (
@@ -9,7 +10,7 @@ export default function Perfil() {
       <div className="container-Info-perfil-grupo">
         <div className="Jorgito">
           <figure>
-            <img src={JorgitoPerfil} alt="Foto de Jorgito" />
+            <img src={jorgito} alt="Foto de Jorgito" />
           </figure>
           <h3>Jorgito</h3>
           <p>

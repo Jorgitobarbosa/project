@@ -1,11 +1,6 @@
-import ApiToti from "./ApiToti";
 import NavCorpo from "./Nav-Corpo";
 import Perfil from "./Perfil";
-import Categories from "./Categories";
-
-
- 
-
+import ProdutosPage from "./PaginaProdutos";
 
 function Corpo() {
   return (
@@ -14,8 +9,7 @@ function Corpo() {
       <div className="perfil-grupo">
         <Perfil />
       </div>
-      <Categories/>
-      <ApiToti />
+      <ProdutosPage />
     </div>
   );
 }

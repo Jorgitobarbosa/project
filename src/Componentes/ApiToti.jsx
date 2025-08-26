@@ -5,7 +5,7 @@ import lixo from "../imagens/lixo.png";
 import carinho from "../imagens/carinho.png";
 import editar from "../imagens/editar.png";
 
-export default function ApiToti() {
+export default function ApiToti({ categoriaSelecionada }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [produtoParaDeletar, setProdutoParaDeletar] = useState(null);
   const [listaP, setListaP] = useState([]);
@@ -23,7 +23,7 @@ export default function ApiToti() {
     listaDeProdutos();
   }, []);
 
-  //TRAZENDO A LISTA DE PRODUTOS
+  // TRAZENDO A LISTA DE PRODUTOS
   function listaDeProdutos() {
     fetch(`https://backend-toti.onrender.com/produtos`)
       .then((data) => data.json())
@@ -32,7 +32,7 @@ export default function ApiToti() {
       });
   }
 
-  //A FUNÇÃO QUE DELETA PRODUTO. DELETA NO BACKEND
+  // A FUNÇÃO QUE DELETA PRODUTO. DELETA NO BACKEND
   const abrirDeleteModal = (produto) => {
     setProdutoParaDeletar(produto);
     setShowDeleteModal(true);
@@ -59,7 +59,7 @@ export default function ApiToti() {
     });
   }; // fim da funcao deletar
 
-  //FUNÇÃO QUE ATUALIZA O PRODUTO, ISTO É, LOCALMENTE. NÃO ALTERA NADA NO BACKEND
+  // FUNÇÃO QUE ATUALIZA O PRODUTO, ISTO É, LOCALMENTE. NÃO ALTERA NADA NO BACKEND
   const abrirModalEdicao = (produto) => {
     setProdutoEditando({ ...produto });
     setShowModal(true);
@@ -77,15 +77,14 @@ export default function ApiToti() {
     fecharModal();
   }; // fim da funcao atualizar
 
-
-  //FUNÇÃO DE ADICIONAR PRODUTO. TAMBÉM NÃO ALTERA NADA NO BACKEND
+  // FUNÇÃO DE ADICIONAR PRODUTO. TAMBÉM NÃO ALTERA NADA NO BACKEND
   const abrirAddModal = () => {
     setNovoProduto({
       id: Date(), // Id fake
       nome: "",
       preco: "",
       categoriaId: "",
-      imagens: [{ url: "" }],
+      imagens:[{url:""}],
     });
     setShowAddModal(true);
   };
@@ -97,10 +96,17 @@ export default function ApiToti() {
     fecharAddModal();
   };
 
+  // FILTRO DE CATEGORIAS 
+  const produtosFiltrados = categoriaSelecionada
+    ? listaP.filter((p) => p.categoriaId === categoriaSelecionada)
+    : listaP;
+
   return (
     <div className="Toti-container-principal">
       <div>
-        <h3 style={{ fontFamily: "Bitcount Prop Single", marginLeft: "5%" }}>Imperdível</h3>
+        <h3 style={{ fontFamily: "Bitcount Prop Single", marginLeft: "5%" }}>
+          Imperdível
+        </h3>
       </div>
 
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -114,7 +120,7 @@ export default function ApiToti() {
       </div>
 
       <div className="Toti-Pai-card">
-        {listaP.map((produtos) => (
+        {produtosFiltrados.map((produtos) => (
           <div className="Toti-card" key={produtos.id || produtos.Date()}>
             <div className="Toti-container-buttons">
               <button onClick={() => abrirModalEdicao(produtos)}>
@@ -305,7 +311,7 @@ export default function ApiToti() {
         </Modal.Footer>
       </Modal>
 
-      {/*Modal de Excluir*/}
+      {/* Modal de excluir */}
       <Modal show={showDeleteModal} onHide={fecharDeleteModal}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmar Exclusão</Modal.Title>
