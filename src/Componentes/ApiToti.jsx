@@ -169,7 +169,6 @@ export default function ApiToti({ categoriaSelecionada }) {
               />
 
               <h2>{produtos.nome}</h2>
-
               <p
                 style={{
                   color: "green",
