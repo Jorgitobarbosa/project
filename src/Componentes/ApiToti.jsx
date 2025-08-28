@@ -16,7 +16,7 @@ export default function ApiToti({ categoriaSelecionada }) {
     nome: "",
     preco: "",
     categoriaId: "",
-    imagens: [{ url: "" }],
+    imagens: [""],
   });
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function ApiToti({ categoriaSelecionada }) {
     });
   }; // fim da funcao deletar
 
-  // FUNÇÃO QUE ATUALIZA O PRODUTO, ISTO É, LOCALMENTE. NÃO ALTERA NADA NO BACKEND
+  // FUNÇÃO QUE ATUALIZA O PRODUTO (AGORA ALTERA NO BACKEND)
   const abrirModalEdicao = (produto) => {
     setProdutoEditando({ ...produto });
     setShowModal(true);
@@ -71,20 +71,31 @@ export default function ApiToti({ categoriaSelecionada }) {
   };
 
   const salvarEdicao = () => {
-    setListaP((prevLista) =>
-      prevLista.map((p) => (p.id === produtoEditando.id ? produtoEditando : p))
-    );
-    fecharModal();
+    fetch(`https://backend-toti.onrender.com/produtos/${produtoEditando.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(produtoEditando),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setListaP((prevLista) =>
+          prevLista.map((p) => (p.id === data.id ? data : p))
+        );
+        fecharModal();
+      })
+      .catch((err) => console.error("Erro ao atualizar produto:", err));
   }; // fim da funcao atualizar
 
-  // FUNÇÃO DE ADICIONAR PRODUTO. TAMBÉM NÃO ALTERA NADA NO BACKEND
+  // FUNÇÃO DE ADICIONAR PRODUTO (AGORA ALTERA NO BACKEND)
   const abrirAddModal = () => {
     setNovoProduto({
-      id: Date(), // Id fake
+      id: "",
       nome: "",
       preco: "",
       categoriaId: "",
-      imagens:[{url:""}],
+      imagens: [""],
     });
     setShowAddModal(true);
   };
@@ -92,11 +103,22 @@ export default function ApiToti({ categoriaSelecionada }) {
   const fecharAddModal = () => setShowAddModal(false);
 
   const adicionarProduto = () => {
-    setListaP((prev) => [...prev, novoProduto]);
-    fecharAddModal();
+    fetch("https://backend-toti.onrender.com/produtos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(novoProduto),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setListaP((prev) => [...prev, data]);
+        fecharAddModal();
+      })
+      .catch((err) => console.error("Erro ao adicionar produto:", err));
   };
 
-  // FILTRO DE CATEGORIAS 
+  // FILTRO DE CATEGORIAS
   const produtosFiltrados = categoriaSelecionada
     ? listaP.filter((p) => p.categoriaId === categoriaSelecionada)
     : listaP;
@@ -121,7 +143,7 @@ export default function ApiToti({ categoriaSelecionada }) {
 
       <div className="Toti-Pai-card">
         {produtosFiltrados.map((produtos) => (
-          <div className="Toti-card" key={produtos.id || produtos.Date()}>
+          <div className="Toti-card" key={produtos.id}>
             <div className="Toti-container-buttons">
               <button onClick={() => abrirModalEdicao(produtos)}>
                 <img src={editar} alt="Icone de Editar" />
@@ -141,7 +163,7 @@ export default function ApiToti({ categoriaSelecionada }) {
 
             <div className="Toti-Info-card">
               <img
-                src={produtos.imagens[0].url}
+                src={produtos.imagens[0]?.url || produtos.imagens[1]?.url}
                 alt={produtos.nome}
                 width={200}
               />
@@ -224,11 +246,11 @@ export default function ApiToti({ categoriaSelecionada }) {
                 <Form.Label>URL da Imagem</Form.Label>
                 <Form.Control
                   type="text"
-                  value={produtoEditando.imagens.url}
+                  value={produtoEditando.imagens[0] || produtoEditando.imagens[1]}
                   onChange={(e) =>
                     setProdutoEditando({
                       ...produtoEditando,
-                      imagens: [{ url: e.target.value }],
+                      imagens: [ e.target.value],
                     })
                   }
                 />
@@ -290,11 +312,11 @@ export default function ApiToti({ categoriaSelecionada }) {
               <Form.Label>URL da Imagem</Form.Label>
               <Form.Control
                 type="text"
-                value={novoProduto.imagens.url}
+                value={novoProduto.imagens[""]}
                 onChange={(e) =>
                   setNovoProduto({
                     ...novoProduto,
-                    imagens: [{ url: e.target.value }],
+                    imagens: [ e.target.value ],
                   })
                 }
               />
