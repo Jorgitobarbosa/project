@@ -163,7 +163,7 @@ export default function ApiToti({ categoriaSelecionada }) {
 
             <div className="Toti-Info-card">
               <img
-                src={produtos.imagens[0]?.url || produtos.imagens[1]?.url}
+                src={produtos.imagens[0].url || produtos.imagens[""]}
                 alt={produtos.nome}
                 width={200}
               />
@@ -246,7 +246,7 @@ export default function ApiToti({ categoriaSelecionada }) {
                 <Form.Label>URL da Imagem</Form.Label>
                 <Form.Control
                   type="text"
-                  value={produtoEditando.imagens[0] || produtoEditando.imagens[1]}
+                  value={produtoEditando.imagens[""]}
                   onChange={(e) =>
                     setProdutoEditando({
                       ...produtoEditando,
