@@ -120,7 +120,7 @@ export default function ApiToti({ categoriaSelecionada }) {
 
   // FILTRO DE CATEGORIAS
   const produtosFiltrados = categoriaSelecionada
-    ? listaP.filter((p) => p.categoriaId === categoriaSelecionada)
+    ? listaP.filter((p) => Number(p.categoriaId) === Number(categoriaSelecionada))
     : listaP;
 
   return (
