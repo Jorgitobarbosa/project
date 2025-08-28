@@ -1,6 +1,6 @@
 import "./ApiToti.css";
 import { useEffect, useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Carousel } from "react-bootstrap";
 import lixo from "../imagens/lixo.png";
 import carinho from "../imagens/carinho.png";
 import editar from "../imagens/editar.png";
@@ -23,7 +23,7 @@ export default function ApiToti({ categoriaSelecionada }) {
     listaDeProdutos();
   }, []);
 
-  // TRAZENDO A LISTA DE PRODUTOS
+  // LISTA DE PRODUTOS
   function listaDeProdutos() {
     fetch(`https://backend-toti.onrender.com/produtos`)
       .then((data) => data.json())
@@ -32,17 +32,17 @@ export default function ApiToti({ categoriaSelecionada }) {
       });
   }
 
-  // A FUNÇÃO QUE DELETA PRODUTO. DELETA NO BACKEND
+  // ABRIR E FECHAR DELETE
   const abrirDeleteModal = (produto) => {
     setProdutoParaDeletar(produto);
     setShowDeleteModal(true);
   };
-
   const fecharDeleteModal = () => {
     setShowDeleteModal(false);
     setProdutoParaDeletar(null);
   };
 
+  // CONFIRMAR DELETE
   const confirmarDelete = () => {
     if (!produtoParaDeletar) return;
 
@@ -57,11 +57,14 @@ export default function ApiToti({ categoriaSelecionada }) {
       );
       fecharDeleteModal();
     });
-  }; // fim da funcao deletar
+  };
 
-  // FUNÇÃO QUE ATUALIZA O PRODUTO (AGORA ALTERA NO BACKEND)
+  // EDITAR PRODUTO
   const abrirModalEdicao = (produto) => {
-    setProdutoEditando({ ...produto });
+    const imagensConvertidas = (produto.imagens || []).map((img) =>
+      typeof img === "string" ? img : img.url
+    );
+    setProdutoEditando({ ...produto, imagens: imagensConvertidas });
     setShowModal(true);
   };
 
@@ -73,10 +76,11 @@ export default function ApiToti({ categoriaSelecionada }) {
   const salvarEdicao = () => {
     fetch(`https://backend-toti.onrender.com/produtos/${produtoEditando.id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(produtoEditando),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...produtoEditando,
+        imagens: produtoEditando.imagens, // array de strings
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -86,9 +90,9 @@ export default function ApiToti({ categoriaSelecionada }) {
         fecharModal();
       })
       .catch((err) => console.error("Erro ao atualizar produto:", err));
-  }; // fim da funcao atualizar
+  };
 
-  // FUNÇÃO DE ADICIONAR PRODUTO (AGORA ALTERA NO BACKEND)
+  // ADICIONAR PRODUTO NO BACKEND
   const abrirAddModal = () => {
     setNovoProduto({
       id: "",
@@ -105,10 +109,11 @@ export default function ApiToti({ categoriaSelecionada }) {
   const adicionarProduto = () => {
     fetch("https://backend-toti.onrender.com/produtos", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(novoProduto),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...novoProduto,
+        imagens: novoProduto.imagens, // array de strings
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -118,9 +123,11 @@ export default function ApiToti({ categoriaSelecionada }) {
       .catch((err) => console.error("Erro ao adicionar produto:", err));
   };
 
-  // FILTRO DE CATEGORIAS
+  // FILTRO DE CATEGORIAS 
   const produtosFiltrados = categoriaSelecionada
-    ? listaP.filter((p) => Number(p.categoriaId) === Number(categoriaSelecionada))
+    ? listaP.filter(
+        (p) => Number(p.categoriaId) === Number(categoriaSelecionada)
+      )
     : listaP;
 
   return (
@@ -162,11 +169,20 @@ export default function ApiToti({ categoriaSelecionada }) {
             </div>
 
             <div className="Toti-Info-card">
-              <img
-                src={produtos.imagens[0].url || produtos.imagens[""]}
-                alt={produtos.nome}
-                width={200}
-              />
+              {/* Slide de imagens */}
+              <Carousel interval={3000}>
+                {Array.isArray(produtos.imagens) &&
+                  produtos.imagens.map((img, index) => (
+                    <Carousel.Item key={index}>
+                      <img
+                        className="d-block w-100"
+                        src={typeof img === "string" ? img : img.url}
+                        alt={`${produtos.nome} ${index + 1}`}
+                        style={{ maxHeight: "200px", objectFit: "contain" }}
+                      />
+                    </Carousel.Item>
+                  ))}
+              </Carousel>
 
               <h2>{produtos.nome}</h2>
               <p
@@ -179,13 +195,12 @@ export default function ApiToti({ categoriaSelecionada }) {
                 R$
                 <strong style={{ fontSize: "25px" }}>
                   {produtos.preco}
-                </strong>{" "}
+                </strong>
                 no PIX / Boleto
               </p>
               <p>
                 <strong>Categoria:</strong> {produtos.categoriaId}
               </p>
-
               <p style={{ fontSize: "13px", marginTop: "15px" }}>
                 em até <strong>10x de R$ 150,99</strong> sem juros
               </p>
@@ -242,14 +257,19 @@ export default function ApiToti({ categoriaSelecionada }) {
                 />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>URL da Imagem</Form.Label>
+                <Form.Label>
+                  URLs das Imagens
+                </Form.Label>
                 <Form.Control
                   type="text"
-                  value={produtoEditando.imagens[""]}
+                  value={produtoEditando.imagens.join(", ")}
                   onChange={(e) =>
                     setProdutoEditando({
                       ...produtoEditando,
-                      imagens: [ e.target.value],
+                      imagens: e.target.value
+                        .split(",")
+                        .map((url) => url.trim())
+                        .filter((url) => url !== ""),
                     })
                   }
                 />
@@ -308,14 +328,17 @@ export default function ApiToti({ categoriaSelecionada }) {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>URL da Imagem</Form.Label>
+              <Form.Label>URLs das Imagens</Form.Label>
               <Form.Control
                 type="text"
-                value={novoProduto.imagens[""]}
+                value={novoProduto.imagens.join(", ")}
                 onChange={(e) =>
                   setNovoProduto({
                     ...novoProduto,
-                    imagens: [ e.target.value ],
+                    imagens: e.target.value
+                      .split(",")
+                      .map((url) => url.trim())
+                      .filter((url) => url === ""),
                   })
                 }
               />

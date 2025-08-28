@@ -2,6 +2,7 @@ import "./Perfil.css";
 import JorgitoPerfil from "../imagens/JorgitoPerfil.jpg";
 import Maylin from "../imagens/Maylin.jpg";
 import jorgito from "../imagens/jorgito.jpg";
+import Jose from "../imagens/Jose.jpg"
 
 export default function Perfil() {
   return (
@@ -21,13 +22,11 @@ export default function Perfil() {
 
         <div className="Jose">
           <figure>
-            <img src={JorgitoPerfil} alt="Foto de Jose" />
+            <img src={Jose} alt="Foto de Jose" />
           </figure>
           <h3>José</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim sed
-            nisi dolor necessitatibus saepe error harum, ipsa, pariatur quae ex
-            soluta. Quas assumenda nihil quod minima non? Omnis, iure minus?
+            Meu nome é José Alberto Guatume Quiroz, sou venezuelano, casado, pai de dois filhos e avô de um lindo neto. Sou grato pela oportunidade proporcionada pela Toti na realização deste curso.
           </p>
         </div>
 
@@ -40,7 +39,7 @@ export default function Perfil() {
             Meu nome é Maylin Montilla, sou venezuelana, tenho 38 anos,
             Engenharia em Informática, estou no Brasil desde 2018, Moto Em
             Torres, Rs. Casada, Mãe de Duas meninas, e amo fazer crochê no
-            meu tempo livre!
+            meu tempo livre!
           </p>
         </div>
 
