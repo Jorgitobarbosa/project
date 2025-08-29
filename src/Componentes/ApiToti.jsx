@@ -27,6 +27,24 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
     listaDeProdutos();
   }, []);
 
+  // sempre que cliente mudar, buscamos o carrinho correspondente
+  useEffect(() => {
+    if (cliente) {
+      fetch(`https://backend-toti.onrender.com/carrinhos?clienteId=${cliente.id}`)
+        .then((res) => res.json())
+        .then((carrinhos) => {
+          if (carrinhos.length > 0) {
+            setCarrinhoAtual(carrinhos[0]);
+          } else {
+            setCarrinhoAtual(null);
+          }
+        })
+        .catch((err) => console.error("Erro ao carregar carrinho:", err));
+    } else {
+      setCarrinhoAtual(null); // logout → limpa só o estado local
+    }
+  }, [cliente]);
+
   // LISTA DE PRODUTOS
   function listaDeProdutos() {
     fetch(`https://backend-toti.onrender.com/produtos`)
@@ -129,10 +147,7 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
 
   // --- FUNÇÕES DE CARRINHO ---
   const adicionarAoCarrinho = async (produto) => {
-    if (!cliente) {
-      alert("Você precisa estar logado para adicionar ao carrinho.");
-      return;
-    }
+    if (!cliente) return;
 
     try {
       const res = await fetch(
@@ -166,7 +181,8 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
         } else {
           carrinho.itens.push({ produtoId: produto.id, quantidade: 1 });
         }
-        await fetch(
+
+        const putRes = await fetch(
           `https://backend-toti.onrender.com/carrinhos/${carrinho.id}`,
           {
             method: "PUT",
@@ -174,10 +190,10 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
             body: JSON.stringify(carrinho),
           }
         );
+        carrinho = await putRes.json();
       }
 
-      setCarrinhoAtual(carrinho);
-      alert(`${produto.nome} adicionado ao carrinho!`);
+      setCarrinhoAtual(carrinho); // garante que estado local é sempre o mais novo
     } catch (err) {
       console.error("Erro ao adicionar no carrinho:", err);
     }
@@ -192,7 +208,7 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
         itens: carrinhoAtual.itens.filter((i) => i.produtoId !== produtoId),
       };
 
-      await fetch(
+      const res = await fetch(
         `https://backend-toti.onrender.com/carrinhos/${carrinhoAtual.id}`,
         {
           method: "PUT",
@@ -200,8 +216,9 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
           body: JSON.stringify(novoCarrinho),
         }
       );
+      const atualizado = await res.json();
 
-      setCarrinhoAtual(novoCarrinho);
+      setCarrinhoAtual(atualizado);
     } catch (err) {
       console.error("Erro ao remover item:", err);
     }
@@ -259,7 +276,6 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
             </div>
 
             <div className="Toti-Info-card">
-              {/* Slide de imagens */}
               <Carousel interval={3000}>
                 {Array.isArray(produtos.imagens) &&
                   produtos.imagens.map((img, index) => (
