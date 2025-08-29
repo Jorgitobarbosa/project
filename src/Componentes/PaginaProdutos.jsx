@@ -5,12 +5,13 @@ import Clientes from "./ClientesCRUD";
 
 export default function ProdutosPage() {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
+  const [cliente, setCliente] = useState(null); // guarda cliente logado
 
   return (
     <div>
-      <Clientes/>
+      <Clientes onLogin={setCliente} /> {/* pega cliente do login */}
       <Categories onSelectCategory={setCategoriaSelecionada} />
-      <ApiToti categoriaSelecionada={categoriaSelecionada} />
+      <ApiToti categoriaSelecionada={categoriaSelecionada} cliente={cliente} />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import lixo from "../imagens/lixo.png";
 import carinho from "../imagens/carinho.png";
 import editar from "../imagens/editar.png";
 
-export default function ApiToti({ categoriaSelecionada }) {
+export default function ApiToti({ categoriaSelecionada, cliente }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [produtoParaDeletar, setProdutoParaDeletar] = useState(null);
   const [listaP, setListaP] = useState([]);
@@ -18,6 +18,10 @@ export default function ApiToti({ categoriaSelecionada }) {
     categoriaId: "",
     imagens: [],
   });
+
+  // estados do carrinho
+  const [carrinhoAtual, setCarrinhoAtual] = useState(null);
+  const [showCartModal, setShowCartModal] = useState(false);
 
   useEffect(() => {
     listaDeProdutos();
@@ -123,6 +127,86 @@ export default function ApiToti({ categoriaSelecionada }) {
       .catch((err) => console.error("Erro ao adicionar produto:", err));
   };
 
+  // --- FUNÇÕES DE CARRINHO ---
+  const adicionarAoCarrinho = async (produto) => {
+    if (!cliente) {
+      alert("Você precisa estar logado para adicionar ao carrinho.");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `https://backend-toti.onrender.com/carrinhos?clienteId=${cliente.id}`
+      );
+      const carrinhos = await res.json();
+      let carrinho = carrinhos[0];
+
+      if (!carrinho) {
+        // cria novo carrinho
+        const novoCarrinho = {
+          clienteId: cliente.id,
+          itens: [{ produtoId: produto.id, quantidade: 1 }],
+        };
+        const postRes = await fetch(
+          "https://backend-toti.onrender.com/carrinhos",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(novoCarrinho),
+          }
+        );
+        carrinho = await postRes.json();
+      } else {
+        // atualiza existente
+        const itemExistente = carrinho.itens.find(
+          (i) => i.produtoId === produto.id
+        );
+        if (itemExistente) {
+          itemExistente.quantidade += 1;
+        } else {
+          carrinho.itens.push({ produtoId: produto.id, quantidade: 1 });
+        }
+        await fetch(
+          `https://backend-toti.onrender.com/carrinhos/${carrinho.id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(carrinho),
+          }
+        );
+      }
+
+      setCarrinhoAtual(carrinho);
+      alert(`${produto.nome} adicionado ao carrinho!`);
+    } catch (err) {
+      console.error("Erro ao adicionar no carrinho:", err);
+    }
+  };
+
+  const removerDoCarrinho = async (produtoId) => {
+    if (!cliente || !carrinhoAtual) return;
+
+    try {
+      const novoCarrinho = {
+        ...carrinhoAtual,
+        itens: carrinhoAtual.itens.filter((i) => i.produtoId !== produtoId),
+      };
+
+      await fetch(
+        `https://backend-toti.onrender.com/carrinhos/${carrinhoAtual.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(novoCarrinho),
+        }
+      );
+
+      setCarrinhoAtual(novoCarrinho);
+    } catch (err) {
+      console.error("Erro ao remover item:", err);
+    }
+  };
+
   // FILTRO DE CATEGORIAS
   const produtosFiltrados = categoriaSelecionada
     ? listaP.filter(
@@ -132,20 +216,26 @@ export default function ApiToti({ categoriaSelecionada }) {
 
   return (
     <div className="Toti-container-principal">
-      <div>
-        <h3 style={{ fontFamily: "Bitcount Prop Single", marginLeft: "5%" }}>
-          Imperdível
-        </h3>
-      </div>
-
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <Button
-          style={{ fontWeight: "bold", fontSize: "20px" }}
-          variant="success"
-          onClick={abrirAddModal}
-        >
-          Adicionar Produto
-        </Button>
+      <div
+        style={{ display: "flex", justifyContent: "space-between", margin: "0 5%" }}
+      >
+        <h3 style={{ fontFamily: "Bitcount Prop Single" }}>Imperdível</h3>
+        <div>
+          <Button
+            style={{ fontWeight: "bold", fontSize: "20px", marginRight: "10px" }}
+            variant="success"
+            onClick={abrirAddModal}
+          >
+            Adicionar Produto
+          </Button>
+          <Button
+            style={{ fontWeight: "bold", fontSize: "20px" }}
+            variant="primary"
+            onClick={() => setShowCartModal(true)}
+          >
+            🛒 Carrinho
+          </Button>
+        </div>
       </div>
 
       <div className="Toti-Pai-card">
@@ -163,8 +253,8 @@ export default function ApiToti({ categoriaSelecionada }) {
                 <img src={lixo} alt="Icone de lixeira" />
               </button>
 
-              <button>
-                <img src={carinho} alt="Carinho de Compra" />
+              <button onClick={() => adicionarAoCarrinho(produtos)}>
+                <img src={carinho} alt="Carrinho de Compra" />
               </button>
             </div>
 
@@ -262,7 +352,7 @@ export default function ApiToti({ categoriaSelecionada }) {
                   onChange={(e) =>
                     setProdutoEditando({
                       ...produtoEditando,
-                      imagens: [e.target.value],  
+                      imagens: [e.target.value],
                     })
                   }
                 />
@@ -361,6 +451,53 @@ export default function ApiToti({ categoriaSelecionada }) {
           <Button variant="danger" onClick={confirmarDelete}>
             Deletar
           </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal de carrinho */}
+      <Modal show={showCartModal} onHide={() => setShowCartModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Meu Carrinho</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {!cliente && <p>Você precisa estar logado para ver o carrinho.</p>}
+          {cliente && !carrinhoAtual && <p>Seu carrinho está vazio.</p>}
+          {cliente && carrinhoAtual && carrinhoAtual.itens.length === 0 && (
+            <p>Seu carrinho está vazio.</p>
+          )}
+          {cliente && carrinhoAtual && carrinhoAtual.itens.length > 0 && (
+            <ul>
+              {carrinhoAtual.itens.map((item, idx) => {
+                const produto = listaP.find((p) => p.id === item.produtoId);
+                return (
+                  <li key={idx} style={{ marginBottom: "10px" }}>
+                    {produto?.nome} — Quantidade: {item.quantidade}
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => removerDoCarrinho(item.produtoId)}
+                    >
+                      Remover
+                    </Button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowCartModal(false)}>
+            Fechar
+          </Button>
+          {cliente && carrinhoAtual && carrinhoAtual.itens.length > 0 && (
+            <Button
+              variant="success"
+              onClick={() => alert("Compra simulada com sucesso!")}
+            >
+              Finalizar Compra
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </div>
