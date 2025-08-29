@@ -6,6 +6,7 @@ function Corpo() {
   return (
     <div>
       <NavCorpo />
+      
       <div className="perfil-grupo">
         <Perfil />
       </div>
