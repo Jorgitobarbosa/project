@@ -16,7 +16,7 @@ export default function ApiToti({ categoriaSelecionada }) {
     nome: "",
     preco: "",
     categoriaId: "",
-    imagens: [""],
+    imagens: [],
   });
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export default function ApiToti({ categoriaSelecionada }) {
       .catch((err) => console.error("Erro ao adicionar produto:", err));
   };
 
-  // FILTRO DE CATEGORIAS 
+  // FILTRO DE CATEGORIAS
   const produtosFiltrados = categoriaSelecionada
     ? listaP.filter(
         (p) => Number(p.categoriaId) === Number(categoriaSelecionada)
@@ -193,9 +193,7 @@ export default function ApiToti({ categoriaSelecionada }) {
                 }}
               >
                 R$
-                <strong style={{ fontSize: "25px" }}>
-                  {produtos.preco}
-                </strong>
+                <strong style={{ fontSize: "25px" }}>{produtos.preco}</strong>
                 no PIX / Boleto
               </p>
               <p>
@@ -257,19 +255,14 @@ export default function ApiToti({ categoriaSelecionada }) {
                 />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>
-                  URLs das Imagens
-                </Form.Label>
+                <Form.Label>URLs das Imagens</Form.Label>
                 <Form.Control
                   type="text"
                   value={produtoEditando.imagens.join(", ")}
                   onChange={(e) =>
                     setProdutoEditando({
                       ...produtoEditando,
-                      imagens: e.target.value
-                        .split(",")
-                        .map((url) => url.trim())
-                        .filter((url) => url !== ""),
+                      imagens: [e.target.value],  
                     })
                   }
                 />
@@ -335,10 +328,7 @@ export default function ApiToti({ categoriaSelecionada }) {
                 onChange={(e) =>
                   setNovoProduto({
                     ...novoProduto,
-                    imagens: e.target.value
-                      .split(",")
-                      .map((url) => url.trim())
-                      .filter((url) => url === ""),
+                    imagens: [e.target.value],
                   })
                 }
               />
