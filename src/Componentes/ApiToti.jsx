@@ -30,7 +30,9 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
   // sempre que cliente mudar, buscamos o carrinho correspondente
   useEffect(() => {
     if (cliente) {
-      fetch(`https://backend-toti.onrender.com/carrinhos?clienteId=${cliente.id}`)
+      fetch(
+        `https://backend-toti.onrender.com/carrinhos?clienteId=${cliente.id}`
+      )
         .then((res) => res.json())
         .then((carrinhos) => {
           if (carrinhos.length > 0) {
@@ -263,23 +265,61 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
   return (
     <div className="Toti-container-principal">
       <div
-        style={{ display: "flex", justifyContent: "space-between", margin: "0 5% 2%" }}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "0 5% 2%",
+        }}
       >
         <h3 style={{ fontFamily: "Bitcount Prop Single" }}>Imperdível</h3>
         <div>
           <Button
-            style={{ fontWeight: "bold", fontSize: "15px", marginRight: "20px", border: "1px solid black" }}
+            style={{
+              fontWeight: "bold",
+              fontSize: "15px",
+              marginRight: "20px",
+              border: "1px solid black",
+            }}
             variant="transparent"
             onClick={abrirAddModal}
           >
             Adicionar Produto
           </Button>
+          {/* Botão Carrinho no topo */}
           <Button
-            style={{ fontWeight: "bold", fontSize: "15px",marginRight: "48px", border: "1px solid black" }}
-            variant="tarnsparent"
+            style={{
+              fontWeight: "bold",
+              fontSize: "15px",
+              marginRight: "48px",
+              border: "1px solid black",
+              position: "relative", // necessário pro badge ficar em cima
+            }}
+            variant="transparent"
             onClick={() => setShowCartModal(true)}
           >
             <img src={carinho} alt="Carrinho de compra" /> Carrinho
+            {/* Badge de quantidade */}
+            {carrinhoAtual && carrinhoAtual.itens.length > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-8px",
+                  right: "-8px",
+                  background: "red",
+                  color: "white",
+                  borderRadius: "50%",
+                  padding: "3px 7px",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  lineHeight: "1",
+                }}
+              >
+                {carrinhoAtual.itens.reduce(
+                  (acc, item) => acc + item.quantidade,
+                  0
+                )}
+              </span>
+            )}
           </Button>
         </div>
       </div>
@@ -500,51 +540,113 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
       </Modal>
 
       {/* Modal de carrinho */}
-      <Modal show={showCartModal} onHide={() => setShowCartModal(false)}>
+      <Modal
+        show={showCartModal}
+        onHide={() => setShowCartModal(false)}
+        size="lg"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Meu Carrinho</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {!cliente && <p>Você precisa estar logado para ver o carrinho.</p>}
-          {cliente && !carrinhoAtual && <p>Seu carrinho está vazio.</p>}
-          {cliente && carrinhoAtual && carrinhoAtual.itens.length === 0 && (
+          {cliente && (!carrinhoAtual || carrinhoAtual.itens.length === 0) && (
             <p>Seu carrinho está vazio.</p>
           )}
+
           {cliente && carrinhoAtual && carrinhoAtual.itens.length > 0 && (
-            <ul>
+            <div>
               {carrinhoAtual.itens.map((item, idx) => {
                 const produto = listaP.find((p) => p.id === item.produtoId);
+                if (!produto) return null;
+
                 return (
-                  <li key={idx} style={{ marginBottom: "10px" }}>
-                    {produto?.nome} — Quantidade: {item.quantidade}
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => atualizarQuantidade(item.produtoId, -1)}
-                    >
-                      -
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      style={{ marginLeft: "5px" }}
-                      onClick={() => atualizarQuantidade(item.produtoId, 1)}
-                    >
-                      +
-                    </Button>
+                  <div
+                    key={idx}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: "15px",
+                      borderBottom: "1px solid #ddd",
+                      paddingBottom: "10px",
+                    }}
+                  >
+                    {/* Imagem */}
+                    <img
+                      src={
+                        typeof produto.imagens[0] === "string"
+                          ? produto.imagens[0]
+                          : produto.imagens[0]?.url
+                      }
+                      alt={produto.nome}
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "cover",
+                        marginRight: "15px",
+                      }}
+                    />
+
+                    {/* Nome e Preço */}
+                    <div style={{ flex: 1 }}>
+                      <h5>{produto.nome}</h5>
+                      <p style={{ margin: 0 }}>Preço: R$ {produto.preco}</p>
+                      <p style={{ margin: 0 }}>
+                        Subtotal:{" "}
+                        <strong>
+                          R$ {Number(produto.preco) * item.quantidade}
+                        </strong>
+                      </p>
+                    </div>
+
+                    {/* Quantidade */}
+                    <div>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => atualizarQuantidade(item.produtoId, -1)}
+                      >
+                        -
+                      </Button>
+                      <span style={{ margin: "0 10px" }}>
+                        {item.quantidade}
+                      </span>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => atualizarQuantidade(item.produtoId, 1)}
+                      >
+                        +
+                      </Button>
+                    </div>
+
+                    {/* Remover */}
                     <Button
                       variant="danger"
                       size="sm"
-                      style={{ marginLeft: "10px" }}
+                      style={{ marginLeft: "15px" }}
                       onClick={() => removerDoCarrinho(item.produtoId)}
                     >
                       Remover
                     </Button>
-                  </li>
+                  </div>
                 );
               })}
-            </ul>
+
+              {/* Total */}
+              <div style={{ textAlign: "right", marginTop: "15px" }}>
+                <h5>
+                  Total: R${" "}
+                  {carrinhoAtual.itens.reduce((acc, item) => {
+                    const produto = listaP.find((p) => p.id === item.produtoId);
+                    return (
+                      acc +
+                      (produto ? Number(produto.preco) * item.quantidade : 0)
+                    );
+                  }, 0)}
+                </h5>
+              </div>
+            </div>
           )}
         </Modal.Body>
         <Modal.Footer>
@@ -554,7 +656,29 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
           {cliente && carrinhoAtual && carrinhoAtual.itens.length > 0 && (
             <Button
               variant="success"
-              onClick={() => alert("Compra simulada com sucesso!")}
+              onClick={async () => {
+                try {
+                  // cria um carrinho vazio mantendo o mesmo clienteId
+                  const carrinhoVazio = { ...carrinhoAtual, itens: [] };
+
+                  const res = await fetch(
+                    `https://backend-toti.onrender.com/carrinhos/${carrinhoAtual.id}`,
+                    {
+                      method: "PUT",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(carrinhoVazio),
+                    }
+                  );
+                  const atualizado = await res.json();
+
+                  setCarrinhoAtual(atualizado);
+                  alert("Compra finalizada com sucesso!");
+                  setShowCartModal(false);
+                } catch (err) {
+                  console.error("Erro ao finalizar compra:", err);
+                  alert("Ocorreu um erro ao finalizar a compra.");
+                }
+              }}
             >
               Finalizar Compra
             </Button>
