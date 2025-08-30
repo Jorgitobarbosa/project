@@ -42,8 +42,8 @@
 .login-button {
   width: 100%;
   padding: 12px;
-  background-color: #ff6200;
-  color: #fff;
+  background-color: #fe97c5;
+  color: #1a0c12;
   border: none;
   border-radius: 5px;
   font-size: 1rem;
@@ -53,9 +53,6 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.login-button:hover {
-  background-color: #e55700;
-}
 
 .login-error,
 .login-success {

@@ -38,7 +38,7 @@ export default function Perfil() {
           <h3>Maylin</h3>
           <p>
             Meu nome é Maylin Montilla, sou venezuelana, tenho 38 anos,
-            Engenharia em Informática, estou no Brasil desde 2018, Moto Em
+            Engenharia em Informática, estou no Brasil desde 2018, Moro Em
             Torres, Rs. Casada, Mãe de Duas meninas, e amo fazer crochê no
             meu tempo livre!
           </p>
