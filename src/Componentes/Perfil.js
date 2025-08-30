@@ -2,7 +2,8 @@ import "./Perfil.css";
 import JorgitoPerfil from "../imagens/JorgitoPerfil.jpg";
 import Maylin from "../imagens/Maylin.jpg";
 import jorgito from "../imagens/jorgito.jpg";
-import Jose from "../imagens/Jose.jpg"
+import Jose from "../imagens/Jose.jpg";
+import Clarisa from "../imagens/Clarisa.jpg";
 
 export default function Perfil() {
   return (
@@ -57,13 +58,11 @@ export default function Perfil() {
 
         <div className="Clarissa">
           <figure>
-            <img src={JorgitoPerfil} alt="Foto de Clarissa" />
+            <img src={Clarisa} alt="Foto de Clarissa" />
           </figure>
-          <h3>Clarissa</h3>
+          <h3>Clarisa</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim sed
-            nisi dolor necessitatibus saepe error harum, ipsa, pariatur quae ex
-            soluta. Quas assumenda nihil quod minima non? Omnis, iure minus?
+            Meu nome é Rocio Clarisa Méndez Leguizamón, tenho 21 anos e sou de nacionalidade paraguaia. Cheguei ao Brasil em 2021 e desde então tenho me dedicado ao desenvolvimento profissional e à aquisição de novas habilidades.
           </p>
         </div>
       </div>

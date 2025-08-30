@@ -101,7 +101,7 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...produtoEditando,
-        imagens: produtoEditando.imagens, // array de strings
+        imagens: produtoEditando.imagens,
       }),
     })
       .then((res) => res.json())
@@ -134,7 +134,7 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...novoProduto,
-        imagens: novoProduto.imagens, // array de strings
+        imagens: novoProduto.imagens,
       }),
     })
       .then((res) => res.json())
@@ -157,7 +157,6 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
       let carrinho = carrinhos[0];
 
       if (!carrinho) {
-        // cria novo carrinho
         const novoCarrinho = {
           clienteId: cliente.id,
           itens: [{ produtoId: produto.id, quantidade: 1 }],
@@ -172,7 +171,6 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
         );
         carrinho = await postRes.json();
       } else {
-        // atualiza existente
         const itemExistente = carrinho.itens.find(
           (i) => i.produtoId === produto.id
         );
@@ -193,7 +191,7 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
         carrinho = await putRes.json();
       }
 
-      setCarrinhoAtual(carrinho); // garante que estado local é sempre o mais novo
+      setCarrinhoAtual(carrinho);
     } catch (err) {
       console.error("Erro ao adicionar no carrinho:", err);
     }
@@ -224,6 +222,37 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
     }
   };
 
+  const atualizarQuantidade = async (produtoId, delta) => {
+    if (!cliente || !carrinhoAtual) return;
+
+    try {
+      const novoCarrinho = {
+        ...carrinhoAtual,
+        itens: carrinhoAtual.itens
+          .map((i) =>
+            i.produtoId === produtoId
+              ? { ...i, quantidade: i.quantidade + delta }
+              : i
+          )
+          .filter((i) => i.quantidade > 0),
+      };
+
+      const res = await fetch(
+        `https://backend-toti.onrender.com/carrinhos/${carrinhoAtual.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(novoCarrinho),
+        }
+      );
+      const atualizado = await res.json();
+
+      setCarrinhoAtual(atualizado);
+    } catch (err) {
+      console.error("Erro ao atualizar quantidade:", err);
+    }
+  };
+
   // FILTRO DE CATEGORIAS
   const produtosFiltrados = categoriaSelecionada
     ? listaP.filter(
@@ -234,23 +263,23 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
   return (
     <div className="Toti-container-principal">
       <div
-        style={{ display: "flex", justifyContent: "space-between", margin: "0 5%" }}
+        style={{ display: "flex", justifyContent: "space-between", margin: "0 5% 2%" }}
       >
         <h3 style={{ fontFamily: "Bitcount Prop Single" }}>Imperdível</h3>
         <div>
           <Button
-            style={{ fontWeight: "bold", fontSize: "20px", marginRight: "10px" }}
-            variant="success"
+            style={{ fontWeight: "bold", fontSize: "15px", marginRight: "20px", border: "1px solid black" }}
+            variant="transparent"
             onClick={abrirAddModal}
           >
             Adicionar Produto
           </Button>
           <Button
-            style={{ fontWeight: "bold", fontSize: "20px" }}
-            variant="primary"
+            style={{ fontWeight: "bold", fontSize: "15px",marginRight: "48px", border: "1px solid black" }}
+            variant="tarnsparent"
             onClick={() => setShowCartModal(true)}
           >
-            🛒 Carrinho
+            <img src={carinho} alt="Carrinho de compra" /> Carrinho
           </Button>
         </div>
       </div>
@@ -488,6 +517,22 @@ export default function ApiToti({ categoriaSelecionada, cliente }) {
                 return (
                   <li key={idx} style={{ marginBottom: "10px" }}>
                     {produto?.nome} — Quantidade: {item.quantidade}
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => atualizarQuantidade(item.produtoId, -1)}
+                    >
+                      -
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      style={{ marginLeft: "5px" }}
+                      onClick={() => atualizarQuantidade(item.produtoId, 1)}
+                    >
+                      +
+                    </Button>
                     <Button
                       variant="danger"
                       size="sm"

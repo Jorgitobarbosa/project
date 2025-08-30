@@ -25,11 +25,12 @@
 
 .container-Info-perfil-grupo p {
     color: #000000;
-    text-align: center;
+    text-align: start;
     font-size: 16px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: rgb(253, 255, 255);
     border-radius: 3px;
+    padding: 5px;
 }
 
 .container-Info-perfil-grupo{

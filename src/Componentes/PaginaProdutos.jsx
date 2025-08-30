@@ -1,17 +1,28 @@
 import { useState } from "react";
-import Categories from "./Categories";
+import ClientesCRUD from "./ClientesCRUD";
 import ApiToti from "./ApiToti";
-import Clientes from "./ClientesCRUD";
+import Categories from "./Categories";
 
-export default function ProdutosPage() {
+export default function PaginaProdutos() {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
-  const [cliente, setCliente] = useState(null); // guarda cliente logado
+  const [clienteLogado, setClienteLogado] = useState(null);
 
   return (
     <div>
-      <Clientes onLogin={setCliente} /> {/* pega cliente do login */}
+      {/* Área de clientes */}
+      <ClientesCRUD
+        onLogin={setClienteLogado}
+        onLogout={() => setClienteLogado(null)}
+      />
+
+      {/* Área de categorias */}
       <Categories onSelectCategory={setCategoriaSelecionada} />
-      <ApiToti categoriaSelecionada={categoriaSelecionada} cliente={cliente} />
+
+      {/* Produtos + Carrinho (recebe cliente logado) */}
+      <ApiToti
+        categoriaSelecionada={categoriaSelecionada}
+        cliente={clienteLogado}
+      />
     </div>
   );
 }
