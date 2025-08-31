@@ -12,10 +12,10 @@ export default function MelhoresMarcas () {
       <h2>As melhores Marcas</h2>
       <div className="logos">
         <img src={apple} alt="apple" />
-        <img src={dell} alt="dell" />
-        <img src={microsoft} alt="microsoft" />
-        <img src={motorola} alt="motorola" />
-        <img src={samsung} alt="samsung" />
+        <img src={microsoft} alt="dell" />
+        <img src={dell} alt="microsoft" />
+        <img src={samsung} alt="motorola" />
+        <img src={motorola} alt="samsung" />
         <img src={lenovo} alt="lenovo" />
       </div>
     </div>
