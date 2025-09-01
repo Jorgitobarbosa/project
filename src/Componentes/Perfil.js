@@ -4,6 +4,7 @@ import Maylin from "../imagens/Maylin.jpg";
 import jorgito from "../imagens/jorgito.jpg";
 import Jose from "../imagens/Jose.jpg";
 import Clarisa from "../imagens/Clarisa.jpg";
+import Sebastian from "../imagens/Sebastian.jpg";
 
 export default function Perfil() {
   return (
@@ -46,13 +47,11 @@ export default function Perfil() {
 
         <div className="Sebastian">
           <figure>
-            <img src={JorgitoPerfil} alt="Foto de Sebastian" />
+            <img src={Sebastian} alt="Foto de Sebastian" />
           </figure>
           <h3>Sebastian</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim sed
-            nisi dolor necessitatibus saepe error harum, ipsa, pariatur quae ex
-            soluta. Quas assumenda nihil quod minima non? Omnis, iure minus?
+           Olá! Sou Sebastian, tenho 21 anos, natural da Venezuela e moro no Brasil há 7 anos. Estou muito agradecido por fazer o curso de Front-End da Toti e estou sempre em busca de aprender e crescer pessoal e profissionalmente.
           </p>
         </div>
 
