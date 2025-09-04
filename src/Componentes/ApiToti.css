@@ -52,3 +52,20 @@
     font-size: 18px;
     font-weight: bold;
 }
+
+@media (max-width: 480px) {
+    .Toti-Pai-card {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .Toti-card {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .Toti-Info-card h2 {
+        font-size: 12px;
+    }
+}

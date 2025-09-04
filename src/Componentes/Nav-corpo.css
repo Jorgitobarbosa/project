@@ -1,89 +1,65 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
-.container-nav-toti{
-    display: flex;
-    font-size: 18px;
-    line-height: 22px;
-    padding: 10px; 
-    background-color: #fe97c5;
-    font-family: "Bitcount Prop Single", sans-serif;
-    height: 43px;
+.container-nav-toti {
+  display: flex;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 10px;
+  background-color: #fe97c5;
+  font-family: "Bitcount Prop Single", sans-serif;
+  height: 43px;
 }
 
-.icone-nav-toti{
-    margin-right: 220px;
-    margin-left: 70px;
-    display: flex;
+.icone-nav-toti {
+  margin-right: 220px;
+  margin-left: 70px;
+  display: flex;
 }
 
 .icone-nav-toti:hover .sub-menu-toti {
-    display: block;
+  display: block;
 }
 
 .sub-menu-toti {
-    display: none;
-    position: absolute;
-    background: #fff;
-    border: 1px solid #ccc;
-    margin-top: -10px;
-    padding: 10px;
-    z-index: 100;
-    width: 400px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-radius: 10px;  
+  display: none;
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-top: -10px;
+  padding: 10px;
+  z-index: 100;
+  width: 400px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
 }
 
-.nav-categoria-toti{
-    display: flex;
+.nav-categoria-toti {
+  display: flex;
 }
 
-.nav-categoria-toti ul{
-    display: flex;
-    list-style: none;
+.nav-categoria-toti ul {
+  display: flex;
+  list-style: none;
 }
 
 .nav-categoria-toti a {
-    margin: 10px;
-    text-decoration: none;
-    color: #262626;
+  margin: 10px;
+  text-decoration: none;
+  color: #262626;
 }
 
-.menu-toti{
-    font-size: 16px;
-    margin-left: 3px;
-    margin-top: 2px;
+.menu-toti {
+  font-size: 16px;
+  margin-left: 3px;
+  margin-top: 2px;
 }
 
 @media (max-width: 480px) {
-    .container-nav-toti {
-        display: block;
-        font-size: 16px;
-        line-height: 20px;
-        width: 100%;
-        max-width: 480px;
-    }
-
-    .icone-nav-toti {
-        display: flex;
-        margin-left: 5px;
-    }
-
-    .nav-categoria-toti {
-        display: block;
-        flex-direction: column;
-    }
-
-   .nav-categoria-toti ul {
-        flex-direction: column;
-   }
-
-    .sub-menu-toti {
-        width: 50%;
-    }
-
+  .container-nav-toti {
+    display: none;
+  }
 }
