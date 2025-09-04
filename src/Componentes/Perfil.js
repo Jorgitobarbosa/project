@@ -1,5 +1,4 @@
 import "./Perfil.css";
-import JorgitoPerfil from "../imagens/JorgitoPerfil.jpg";
 import Maylin from "../imagens/Maylin.jpg";
 import jorgito from "../imagens/jorgito.jpg";
 import Jose from "../imagens/Jose.jpg";
